@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -32,6 +32,89 @@
 
       document.cookie = `username=${username}`
       document.cookie = `password=${pw}`
+      document.querySelector('pre').innerText = document.cookie
+    })
+    const fetchBtn = document.getElementById('fetch-btn')
+    fetchBtn.addEventListener('click', async () => {
+      const res = await fetch(window.location)
+    })
+  </script>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" href="https://fav.farm/🍪">
+  <title>Cookie</title>
+  <link rel="stylesheet" href="styles.css"> <!-- sets color as blue -->
+  <style>
+    p {
+      color: red;
+    }
+  </style> <!-- sets color as red -->
+</head>
+<body>
+  <script>
+    let name = 'world';
+    if (document.cookie.indexOf('username=') !== -1) {
+      name = document.cookie.split('username=')[1].split(';')[0]
+    }
+    else if (window.location.search.indexOf('name=') !== -1) {
+      const params = new URLSearchParams(window.location.search)
+      name = params.get('name')
+    }
+  </script>
+  <p>Hello
+  <script>document.write(name)</script>!
+  </p>
+  Select your language:
+  
+  <select>
+    <script>
+      let defaultLanguage = 'english';
+
+      if (document.location.href.indexOf("default=") !== -1) {
+        defaultLanguage = decodeURIComponent(document.location.href.substring(document.location.href.indexOf("default=") + 8));
+        document.write("<OPTION value=1>" + defaultLanguage + "</OPTION>");
+        if (defaultLanguage != 'english') {
+          document.write("<OPTION value=2>English</OPTION>");
+        }
+      } else {
+        document.write("<OPTION value=1>English</OPTION>");
+      }
+
+
+    </script>
+  </select>
+  <form id="login">
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username">
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+    <button type="submit">Login</button>
+  </form>
+  <pre></pre>
+  <button id="fetch-btn">fetch</button>
+  <script>
+    const formEl = document.getElementById('login')
+    formEl.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      
+      const username = formEl.username.value
+      const password = formEl.password.value
+      let enc = new TextEncoder();
+      const pwVals = enc.encode(password)
+      let pw = ''
+      for (val of pwVals) {
+        pw+=val*Date.now()
+      }
+
+      document.cookie = `username=${username}`
+      document.cookie = `token=${pw}`
       document.querySelector('pre').innerText = document.cookie
     })
     const fetchBtn = document.getElementById('fetch-btn')
